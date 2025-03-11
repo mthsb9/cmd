@@ -88,12 +88,12 @@ ffuf -w ~/Tools/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-smal
 -mc (match code)
 ```
 
-## Output name and format (Default JSON)
+### Output name and format (Default JSON)
 ```
 ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ -t 200 -o directories_found -of html
 ```
 
-## Increase Threads 
+### Increase Threads 
 ```
 ffuf -w wordlist.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ -t 200
 ```
