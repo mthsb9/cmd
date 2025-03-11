@@ -28,7 +28,7 @@ admin' or '1'='1
 SELECT * FROM logins WHERE username='admin' or '1'='1' AND password = 'something';
 ```
 
-![image.png](../Images/sqli_image1.png)
+![image.png](../../Images/sqli_image1.png)
 
 # **Comments**
 
