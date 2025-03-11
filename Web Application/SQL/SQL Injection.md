@@ -195,7 +195,7 @@ If the query returns `Y`, it means `YES`, indicating superuser privileges.
 cn' UNION SELECT 1, grantee, privilege_type, 4 FROM information_schema.user_privileges WHERE grantee="'root'@'localhost'"-- -
 ```
 
-![image.png](SQL%20Injections%2013166046cc148077aa8ee70528dfedcc/image%201.png)
+![image.png](../../Images/sqli_image2.png)
 
 ### **LOAD_FILE**
 
