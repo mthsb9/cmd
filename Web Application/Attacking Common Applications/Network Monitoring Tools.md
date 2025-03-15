@@ -116,7 +116,7 @@ test.txt;net user prtgadm1 Pwn3d_by_PRTG! /add;net localgroup administrators prt
 
  During an actual assessment, we may want to do something that does not change the system, such as getting a reverse shell or connection to our favorite C2. Finally, click the `Save` button.
 
-![image.png](../..//NMT_image3.png)
+![image.png](../../Images/NMT_image3.png)
 
 After clicking `Save`, we will be redirected to the `Notifications` page and see our new notification named `pwn` in the list.
 
