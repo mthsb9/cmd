@@ -66,7 +66,7 @@ splunk_shell/default/inputs.conf
 
 The next step is to choose `Install app from file` and upload the application.
 
-![image.png](../..//NMT_image0.png)
+![image.png](../../Images/NMT_image0.png)
 
 ### Linux
 
@@ -101,7 +101,7 @@ When creating a new notification, the `Parameter` field is passed directly into 
 
 To begin, mouse over `Setup` in the top right and then the `Account Settings` menu and finally click on `Notifications`.
 
-![image.png](../..//NMT_image1.png)
+![image.png](../../Images/NMT_image1.png)
 
 Next, click on `Add new notification`.
 
