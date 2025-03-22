@@ -28,7 +28,7 @@ john --incremental <hash_file>
 <tool> <file_to_crack> > file.hash
 ```
 
-### Example
+## Example
 
 ```
 pdf2john server_doc.pdf > server_doc.hash
@@ -45,7 +45,7 @@ grep "bitlocker\$0" backup.hashes > backup.hash
 cat backup.hash
 ```
 
-### Tools
+## Tools
 
 | **Tool** | **Description** |
 | --- | --- |
@@ -64,7 +64,7 @@ cat backup.hash
 | `office2john` | Converts MS Office documents for John |
 | `wpa2john` | Converts WPA/WPA2 handshakes for John |
 
-### More Tools
+## More Tools
 
 ```
 locate *2john*
